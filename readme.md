@@ -1,0 +1,1 @@
+# Collection of projects/ exercises and challenges related to web applications in Python Module.
