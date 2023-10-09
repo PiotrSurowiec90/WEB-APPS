@@ -29,6 +29,23 @@ def wave():
     name = request.args.get("name")
     return f"I am waving at {name}"
 
+@app.route('/count_vowels', methods = ['POST'])
+def count_vowels():
+    text = request.form.get("text").lower()
+    num_of_vowels = sum([
+        1 for letter in text if letter in 'aeiou'
+    ])
+    return f'There are {num_of_vowels} vowels in "{text}"'
+
+@app.route('/sort_names', methods = ['POST'])
+def sort_names():
+    names_list = request.form.get('list').split(',')
+    return ','.join(sorted(names_list))
+
+
+
+
+
 
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
