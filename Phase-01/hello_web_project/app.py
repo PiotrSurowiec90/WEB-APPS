@@ -43,24 +43,16 @@ def sort_names():
     names_list = request.form.get("list").split(",")
     return ",".join(sorted(names_list))
 
-"""
-For an extra challenge, add multiple names and sort them alphabetically.
 
-
-# Request:
-GET /names?add=Eddie,Leo
-
-# Expected response (2OO OK):
-Alice, Eddie, Julia, Karim, Leo
-"""
-@app.route('/names', methods = ['GET'])
+@app.route("/names", methods=["GET"])
 def names():
-    names_list = ['Alice','Karim', 'Julia']
-    extra_names = request.args.get('add')
+    names_list = ["Alice", "Karim", "Julia"]
+    extra_names = request.args.get("add")
     if extra_names:
-        names_list += extra_names.split(',')
-    
-    return ', '.join(sorted(names_list))
+        names_list += extra_names.split(",")
+
+    return ", ".join(sorted(names_list))
+
 
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
