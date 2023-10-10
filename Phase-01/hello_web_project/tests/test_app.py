@@ -68,3 +68,21 @@ def test_sort_names_with_form_data(web_client):
     )
     assert response.status_code == 200
     assert response.data.decode("utf-8") == "Alice,Joe,Julia,Kieran,Zoe"
+
+
+def test_names_with_two_names_as_param(web_client):
+    response = web_client.get("/names?add=Eddie,Leo")
+    assert response.status_code == 200
+    assert response.data.decode("utf-8") == "Alice, Eddie, Julia, Karim, Leo"
+
+
+def test_names_with_no_params(web_client):
+    response = web_client.get("/names")
+    assert response.status_code == 200
+    assert response.data.decode('utf-8') == "Alice, Julia, Karim"
+
+
+def test_names_with_similar_names(web_client):
+    response = web_client.get("/names?add=Aaaa,Aaaz,Aaab")
+    assert response.status_code == 200
+    assert response.data.decode('utf-8') == "Aaaa, Aaab, Aaaz, Alice, Julia, Karim"

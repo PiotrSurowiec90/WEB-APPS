@@ -24,28 +24,43 @@ def submit():
     message = request.form.get("message")
     return f"Thanks {name}, you sent this message: {message}"
 
-@app.route('/wave', methods=['GET'])
+
+@app.route("/wave", methods=["GET"])
 def wave():
     name = request.args.get("name")
     return f"I am waving at {name}"
 
-@app.route('/count_vowels', methods = ['POST'])
+
+@app.route("/count_vowels", methods=["POST"])
 def count_vowels():
     text = request.form.get("text").lower()
-    num_of_vowels = sum([
-        1 for letter in text if letter in 'aeiou'
-    ])
+    num_of_vowels = sum([1 for letter in text if letter in "aeiou"])
     return f'There are {num_of_vowels} vowels in "{text}"'
 
-@app.route('/sort_names', methods = ['POST'])
+
+@app.route("/sort_names", methods=["POST"])
 def sort_names():
-    names_list = request.form.get('list').split(',')
-    return ','.join(sorted(names_list))
+    names_list = request.form.get("list").split(",")
+    return ",".join(sorted(names_list))
+
+"""
+For an extra challenge, add multiple names and sort them alphabetically.
 
 
+# Request:
+GET /names?add=Eddie,Leo
 
-
-
+# Expected response (2OO OK):
+Alice, Eddie, Julia, Karim, Leo
+"""
+@app.route('/names', methods = ['GET'])
+def names():
+    names_list = ['Alice','Karim', 'Julia']
+    extra_names = request.args.get('add')
+    if extra_names:
+        names_list += extra_names.split(',')
+    
+    return ', '.join(sorted(names_list))
 
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
