@@ -4,6 +4,6 @@
 <br>
 [2. Phase Two - Music_Web_App](https://github.com/PiotrSurowiec90/WEB-APPS/tree/main/Phase-02/music_web_app)
 <br>
-[2. Phase Three - Templates-Basics](https://github.com/PiotrSurowiec90/WEB-APPS/tree/main/Phase-03/01-html-basics-project)
+[3. Phase Three - Templates-Basics](https://github.com/PiotrSurowiec90/WEB-APPS/tree/main/Phase-03/01-html-basics-project)
 <br>
-[2. Phase Three - Muisc_Web_App_Html](https://github.com/PiotrSurowiec90/WEB-APPS/tree/main/Phase-03/music_web_app_html)
+[4. Phase Three - Muisc_Web_App_Html](https://github.com/PiotrSurowiec90/WEB-APPS/tree/main/Phase-03/music_web_app_html)
