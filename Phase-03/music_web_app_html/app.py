@@ -1,13 +1,21 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+from lib.album_repository import AlbumRepository
+from lib.album import Album
+
 
 # Create a new Flask app
 app = Flask(__name__)
 
 # == Your Routes Here ==
-
-
+@app.route('/albums', methods = ['GET'])
+def albums():
+    connection = get_flask_database_connection(app)
+    repo = AlbumRepository(connection)
+    albums = repo.all()
+    print(albums)
+    return render_template('music_library/albums.html', albums = albums)
 # == Example Code Below ==
 
 # GET /emoji
