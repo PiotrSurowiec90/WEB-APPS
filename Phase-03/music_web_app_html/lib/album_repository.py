@@ -17,12 +17,13 @@ class AlbumRepository:
 
     def create(self, new_album):
         query = (
-            "INSERT INTO albums (title, release_year, artist_id) VALUES (%s, %s, %s)"
+            "INSERT INTO albums (title, release_year, artist_id) VALUES (%s, %s, %s) RETURNING id"
         )
-        self._connection.execute(
+        rows = self._connection.execute(
             query, [new_album.title, new_album.release_year, new_album.artist_id]
         )
-
+        new_album.id = rows[0].get('id')
+        return new_album
     def delete(self, album_id):
         query = "DELETE FROM albums WHERE id = %s"
         self._connection.execute(query, [album_id])

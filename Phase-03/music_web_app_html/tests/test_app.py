@@ -121,6 +121,7 @@ def test_artist_list_has_valid_detail_link(page, test_web_address, db_connection
     title = page.locator("h1")
     expect(title).to_have_text(["Pixies"])
 
+
 """GET /artist/1
 Test if artist detail with artist id = 1 returns template
 with correct values"""
@@ -135,3 +136,30 @@ def test_artist_detail(page, test_web_address, db_connection):
 
     genre = page.locator("p")
     expect(genre).to_have_text(["Rock"])
+
+
+"""Get /albums/create
+Test page displays form on get request."""
+
+
+def test_album_create(page, test_web_address, db_connection):
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/albums")
+    page.click("text=Add new album")
+    page.fill("input[name='title']", "New Album")
+    page.fill("input[name='release_year']", "2023")
+    page.fill("input[name='artist_id']", "1")
+    page.click("text=Create")
+    new_album_container = page.locator(".album")
+    expect(new_album_container).to_have_text(["Title: New Album Released: 2023"])
+
+
+def test_album_create_with_invalid_form(page, test_web_address, db_connection):
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/albums")
+    page.click("text=Add new album")
+    page.click("text=Create")
+    errors = page.locator(".errors")
+    expect(errors).to_have_text(
+        "Title can't be empty!, Release year can't be empty!, Artist id can't be empty!"
+    )
