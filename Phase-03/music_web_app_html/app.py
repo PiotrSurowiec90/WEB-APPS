@@ -55,8 +55,8 @@ def album_create():
 
     if request.method == "GET":
         return render_template("music_library/album_create.html")
-    
-    if request.method == 'POST':
+
+    if request.method == "POST":
         new_album = Album(
             None,
             request.form.get("title"),
@@ -70,6 +70,25 @@ def album_create():
         else:
             return render_template(
                 "music_library/album_create.html", errors=new_album.generate_errors()
+            )
+
+
+@app.route("/artists/create", methods=["GET", 'POST'])
+def artist_create():
+    connection = get_flask_database_connection(app)
+    repo = ArtistRepository(connection)
+
+    if request.method == "GET":
+        return render_template("music_library/artist_create.html")
+
+    if request.method == "POST":
+        new_artist = Artist(None, request.form.get("name"), request.form.get("genre"))
+        if new_artist.is_valid():
+            new_artist = repo.create(new_artist)
+            return redirect(url_for("artist_detail", artist_id=new_artist.id))
+        else:
+            return render_template(
+                "music_library/artist_create.html", errors=new_artist.generate_errors()
             )
 
 

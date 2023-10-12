@@ -15,3 +15,15 @@ class Artist:
     # This method makes it look nicer when we print an Artist
     def __repr__(self):
         return f"Artist({self.id}, {self.name}, {self.genre})"
+
+    def is_valid(self):
+        return self.name and self.genre
+    
+    def generate_errors(self):
+        errors = []
+        if not self.name:
+            errors.append("Name can't be empty!")
+        if not self.genre:
+            errors.append("Genre can't be epmty!")
+
+        return errors if len(errors) > 0 else None

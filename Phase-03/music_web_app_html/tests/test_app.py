@@ -163,3 +163,22 @@ def test_album_create_with_invalid_form(page, test_web_address, db_connection):
     expect(errors).to_have_text(
         "Title can't be empty!, Release year can't be empty!, Artist id can't be empty!"
     )
+
+"""Artist Create TESTS"""
+def test_artist_create_valid_input(page, test_web_address, db_connection):
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/artists")
+    page.click("text=Add new artist")
+    page.fill("input[name='name']", "New Artist")
+    page.fill("input[name='genre']", "RockRock")
+    page.click("text=Create")
+    artist_h1 = page.locator("h1")
+    expect(artist_h1).to_have_text("New Artist")
+
+def test_artist_create_with_invalid_form(page, test_web_address, db_connection):
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/artists")
+    page.click("text=Add new artist")
+    page.click("text=Create")
+    errors = page.locator(".errors")
+    expect(errors).to_have_text("Name can't be empty!, Genre can't be epmty!")
