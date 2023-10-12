@@ -8,7 +8,7 @@ from lib.album import Album
 # Create a new Flask app
 app = Flask(__name__)
 
-# == Your Routes Here ==
+# Albums list view.
 @app.route('/albums', methods = ['GET'])
 def albums():
     connection = get_flask_database_connection(app)
@@ -16,6 +16,27 @@ def albums():
     albums = repo.all()
     print(albums)
     return render_template('music_library/albums.html', albums = albums)
+
+
+#Albums detial view
+@app.route("/albums/<int:album_id>")
+def album_detail(album_id):
+    connection = get_flask_database_connection(app)
+    repo = AlbumRepository(connection)
+    album = repo.find(album_id)
+    return render_template("music_library/album_detail.html", album=album)
+
+
+
+
+
+
+
+
+
+
+
+
 # == Example Code Below ==
 
 # GET /emoji

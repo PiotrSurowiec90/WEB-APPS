@@ -36,7 +36,53 @@ def test_get_albums(page, test_web_address, db_connection):
     db_connection.seed("seeds/music_library.sql")
     page.goto(f"http://{test_web_address}/albums")
 
-    album_divs = page.locator(".album")
+    album_divs = page.locator("li")
     expect(album_divs).to_have_text(
-        ["Title: Doolittle Released: 1989", "Title: Surfer Rosa Released: 1988"]
+        ["Doolittle", "Surfer Rosa"]
     )
+
+"""
+GET /albums/<int: album_id>
+Test if the requested url returns 200 - OK resposne.
+"""
+def test_get_album_detail(db_connection, web_client):
+    db_connection.seed("seeds/music_library.sql")
+    response = web_client.get("/albums/1")
+    assert response.status_code == 200
+
+"""
+GET /albums/album_id
+Test if requested url returns album detail content
+"""
+def test_get_album_detail_renders_album_indo(page, test_web_address, db_connection):
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/albums/1")
+
+    album_container = page.locator(".album")
+    expect(album_container).to_have_text([
+        "Title: Doolittle Released: 1989"
+    ])
+
+"""GET /albums
+Test if list of album contains valid links to detail views"""
+
+def test_get_album_list_has_links_to_album_detail(page, test_web_address, db_connection):
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/albums")
+
+    page.click("text=Doolittle")
+
+    album_container = page.locator(".album")
+
+    expect(album_container).to_have_text([
+        "Title: Doolittle Released: 1989"
+    ])
+
+def test_back_navigation_button_in_album_detail(page, test_web_address, db_connection):
+    db_connection.seed("seeds/music_library.sql")
+    page.goto(f"http://{test_web_address}/albums")
+
+    page.click("text=Doolittle")
+    page.click("text=Go back to list of albums")
+    title = page.locator("h1")
+    expect(title).to_have_text(["Albums"])
