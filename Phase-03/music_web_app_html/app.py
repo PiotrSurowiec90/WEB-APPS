@@ -3,6 +3,8 @@ from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.album_repository import AlbumRepository
 from lib.album import Album
+from lib.artist import Artist
+from lib.artist_repository import ArtistRepository
 
 
 # Create a new Flask app
@@ -27,11 +29,22 @@ def album_detail(album_id):
     return render_template("music_library/album_detail.html", album=album)
 
 
+@app.route("/artists", methods = ['GET'])
+def artist_list():
+    connection = get_flask_database_connection(app)
+    repo = ArtistRepository(connection)
+
+    artists = repo.all()
+    return render_template("music_library/artist_list.html", artists=artists)
 
 
+@app.route("/artists/<int:artist_id>", methods = ['GET'])
+def artist_detail(artist_id):
+    connection = get_flask_database_connection(app)
+    repo = ArtistRepository(connection)
 
-
-
+    artist_obj = repo.find(artist_id)
+    return render_template("music_library/artist_detail.html", artist=artist_obj)
 
 
 
