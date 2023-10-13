@@ -3,7 +3,7 @@ from lib.postcode_checker import PostcodeChecker
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
-
+app.jinja_options["autoescape"] = lambda _: True
 
 @app.route('/')
 def index():
