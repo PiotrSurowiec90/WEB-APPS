@@ -9,3 +9,5 @@
 [4. Phase Three - Muisc_Web_App_Html](https://github.com/PiotrSurowiec90/WEB-APPS/tree/main/Phase-03/music_web_app_html)
 <br>
 [5. Phase Three - blog_app](https://github.com/PiotrSurowiec90/WEB-APPS/tree/main/Phase-03/blog_app)
+<br>
+[6. Phase Three - postcode_checker_app](https://github.com/PiotrSurowiec90/WEB-APPS/tree/main/Phase-03/postcode_checker_app)
